@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.googleapis.com/youtube/v3/videos?id=J7ikFUlkP_k&key=<YOUTUBE_API_KEY>&part=snippet,contentDetails,statistics
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sun, 03 Feb 2019 01:29:52 GMT
+      Expires:
+      - Sun, 03 Feb 2019 01:29:52 GMT
+      Cache-Control:
+      - private, max-age=0
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="44,43,39"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+         "error": {
+          "errors": [
+           {
+            "domain": "usageLimits",
+            "reason": "accessNotConfigured",
+            "message": "Project 522631134207 is not found and cannot be used for API calls. If it is recently created, enable YouTube Data API by visiting https://console.developers.google.com/apis/api/youtube.googleapis.com/overview?project=522631134207 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.",
+            "extendedHelp": "https://console.developers.google.com/apis/api/youtube.googleapis.com/overview?project=522631134207"
+           }
+          ],
+          "code": 403,
+          "message": "Project 522631134207 is not found and cannot be used for API calls. If it is recently created, enable YouTube Data API by visiting https://console.developers.google.com/apis/api/youtube.googleapis.com/overview?project=522631134207 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."
+         }
+        }
+    http_version: 
+  recorded_at: Sun, 03 Feb 2019 01:29:52 GMT
+recorded_with: VCR 4.0.0

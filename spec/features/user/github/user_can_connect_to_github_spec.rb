@@ -17,8 +17,8 @@ describe 'as a user on the dashboard screen' do
 		expect(page).to have_link("Connect Your Github")
 
 		click_on "Connect Your Github"
-    save_and_open_page
 
+    expect(page).to have_content("Your Github:")
 		expect(page).to_not have_link("Connect Your Github")
   end
 
@@ -29,6 +29,6 @@ describe 'as a user on the dashboard screen' do
       "uid" => "12345",
       "provider" => "github",
       "credentials" => {
-        "token" => "12345"}})
+        "token" => ENV['GITHUB_API_KEY']}})
   end
 end
