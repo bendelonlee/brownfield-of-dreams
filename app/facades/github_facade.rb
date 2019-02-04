@@ -1,10 +1,11 @@
 class GithubFacade
 
-  def initialize(token)
-    @access_token = token
+  def initialize(current_user)
+    @access_token = current_user[:github_token]
     @_followers = nil
     @_repos = nil
     @_followings = nil
+    @_friendships = nil
   end
 
   def repos
@@ -23,6 +24,14 @@ class GithubFacade
     find_followings.map do |following|
       Following.new(following)
     end
+  end
+
+  def user_check(user)
+    User.exists?(github_uid: user.name)
+  end
+
+  def friend_check(user)
+    
   end
 
   private
