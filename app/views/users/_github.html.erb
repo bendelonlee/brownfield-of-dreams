@@ -12,8 +12,8 @@
       <div id="follower-<%= follower.name %>">
         <li class="follower"><%= link_to(follower.name, follower.url) %></li>
 
-        <% if @github_facade.user_check(follower) && !(@github_facade.friend_check(following)) %>
-          <%= link_to "Add as Friend", add_friend_path(id: current_user.id, name: follower.name), method: :post, class: "mt2 btn btn-primary mb1 bg-teal" %>
+        <% if @github_facade.user_check(follower) && !(@github_facade.friend_check(follower)) %>
+          <%= link_to "Add as Friend", add_friend_path(user_id: current_user.id, name: follower.name), method: :post, class: "mt2 btn btn-primary mb1 bg-teal" %>
         <% end %>
       </div>
     <% end %>
@@ -24,8 +24,17 @@
       <div id="following-<%= following.name %>">
         <li class="following"><%= link_to(following.name, following.url) %></li>
         <% if @github_facade.user_check(following) && !(@github_facade.friend_check(following)) %>
-          <%= link_to "Add as Friend", add_friend_path(id: current_user.id, name: following.name), method: :post, class: "mt2 btn btn-primary mb1 bg-teal" %>
+          <%= link_to "Add as Friend", add_friend_path(user_id: current_user.id, name: following.name), method: :post, class: "mt2 btn btn-primary mb1 bg-teal" %>
         <% end %>
+      </div>
+    <% end %>
+  </ul>
+
+  <h3>Friends:</h3>
+  <ul>
+    <% @github_facade.friends.each do |friend| %>
+      <div id="friend-<%= friend.github_uid %>">
+        <li class="friend"><%= link_to(friend.github_uid) %></li>
       </div>
     <% end %>
   </ul>
