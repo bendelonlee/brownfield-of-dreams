@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   get '/auth/github/callback', to: 'auth/github/user_token#create'
 
   get '/dashboard', to: 'users#show'
-  post '/add_friend', to: 'add_friend#create'
+  post '/add_friend', to: 'friendship#create'
   get '/about', to: 'about#show'
   get '/get_started', to: 'get_started#show'
 
