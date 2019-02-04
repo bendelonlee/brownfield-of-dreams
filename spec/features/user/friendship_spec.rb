@@ -4,7 +4,7 @@ describe 'friendship' do
   after(:all) { VCR.turn_on! }
   it 'user can add their followers / followings on github as a friend on our website' do
 
-    user_1 = create(:user, github_token: "IFollowerUser2andAmFollowedBy3")
+    user_1 = create(:user, github_token: "IFollowUser3andAmFollowedBy2")
     user_2 = create(:user, github_uid: "user_2_id")
     user_3 = create(:user, github_uid: "user_3_id")
 
@@ -13,7 +13,7 @@ describe 'friendship' do
       "uid" => "not_on_our_site_id"
     }
 
-    stub_request(:get, "https://api.github.com/user/repos?access_token=IFollowerUser2andAmFollowedBy3").
+    stub_request(:get, "https://api.github.com/user/repos?access_token=IFollowUser3andAmFollowedBy2").
          with(
            headers: {
           'Accept'=>'*/*',
@@ -22,7 +22,7 @@ describe 'friendship' do
            }).
          to_return(status: 200, body: [{id: '12345',name: "brownfield-of-dreams", html_url: "https://coolurl.org"}].to_json, headers: {})
 
-     stub_request(:get, "https://api.github.com/user/followers?access_token=IFollowerUser2andAmFollowedBy3").
+     stub_request(:get, "https://api.github.com/user/followers?access_token=IFollowUser3andAmFollowedBy2").
           with(
             headers: {
            'Accept'=>'*/*',
@@ -33,7 +33,7 @@ describe 'friendship' do
                                         {id: user_not_on_our_site['uid'], login: user_not_on_our_site['login'], html_url: "https://coolurl.org"}
                     ].to_json, headers: {})
 
-      stub_request(:get, "https://api.github.com/user/following?access_token=IFollowerUser2andAmFollowedBy3").
+      stub_request(:get, "https://api.github.com/user/following?access_token=IFollowUser3andAmFollowedBy2").
            with(
              headers: {
             'Accept'=>'*/*',
@@ -50,20 +50,21 @@ describe 'friendship' do
     within("#follower-#{user_not_on_our_site['uid']}") do
       expect(page).to_not have_content("Add Friend")
     end
-    within("#follower-#{@user_3.github_uid}") do
+    within("#follower-#{user_2.github_uid}") do
       expect(page).to have_content("Add Friend")
     end
     within("#following-#{user_not_on_our_site['uid']}") do
       expect(page).to_not have_content("Add Friend")
     end
-    within("#following-#{@user_2.github_uid}") do
+    within("#following-#{user_3.github_uid}") do
       expect(page).to have_content("Add Friend")
       click_link("Add Friend")
     end
-    expect(current_path).to eq(add_friend_path(user_1, user_2))
-    within("#following-#{@user_2.github_uid}") do
+    expect(current_path).to eq(dashboard_path)
+    save_and_open_page
+    within("#following-#{user_3.github_uid}") do
       expect(page).to_not have_content("Add Friend")
-      expect(page).to have_content("Your Friend")
+      expect(page).to have_content("Is your friend")
     end
   end
 end

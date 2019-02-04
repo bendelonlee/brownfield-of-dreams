@@ -28,6 +28,8 @@ Rails.application.routes.draw do
   post '/login', to: "sessions#create"
   delete '/logout', to: "sessions#destroy"
 
+  post 'friends/:id/:friend_id', to: "friendships#create", as: "friendships"
+
   get 'auth/github', as: :github_login
   get '/auth/github/callback', to: 'auth/github/user_token#create'
 
