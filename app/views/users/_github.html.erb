@@ -9,13 +9,24 @@
   <h3>Followers:</h3>
   <ul>
     <% @github_facade.followers.each do |follower| %>
-      <li class="follower"><%= link_to(follower.name, follower.url) %></li>
+      <div id="follower-<%= follower.name %>">
+        <li class="follower"><%= link_to(follower.name, follower.url) %></li>
+
+        <% if @github_facade.user_check(follower) && !(@github_facade.friend_check(following)) %>
+          <%= link_to "Add as Friend", add_friend_path(id: current_user.id, name: follower.name), method: :post, class: "mt2 btn btn-primary mb1 bg-teal" %>
+        <% end %>
+      </div>
     <% end %>
   </ul>
   <h3>Following:</h3>
   <ul>
     <% @github_facade.followings.each do |following| %>
-      <li class="following"><%= link_to(following.name, following.url) %></li>
+      <div id="following-<%= following.name %>">
+        <li class="following"><%= link_to(following.name, following.url) %></li>
+        <% if @github_facade.user_check(following) && !(@github_facade.friend_check(following)) %>
+          <%= link_to "Add as Friend", add_friend_path(id: current_user.id, name: following.name), method: :post, class: "mt2 btn btn-primary mb1 bg-teal" %>
+        <% end %>
+      </div>
     <% end %>
   </ul>
 </section>
