@@ -5,7 +5,7 @@ class GithubFacade
     @_followers = nil
     @_repos = nil
     @_followings = nil
-    @_friendships = nil
+    @current_user = current_user
   end
 
   def repos
@@ -31,7 +31,12 @@ class GithubFacade
   end
 
   def friend_check(user)
-    
+    user_id = User.find_friend_id(user.name)
+    Friendship.where('user_id = ? AND friend_id = ?', @current_user.id, user_id).exists?
+  end
+
+  def friends
+    User.find(@current_user.id).friends
   end
 
   private
