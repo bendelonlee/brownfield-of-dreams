@@ -1,0 +1,9 @@
+<%= relations.each %>
+
+<% @user_facade.followers.each do |relation| %>
+<li class="<%= relation.class.to_s %>" id="relation-<%= relation.uid %>">
+   <%= link_to(relation.name, relation.url) %>
+   <% if relation.on_our_site? && !@user_facade.friends_with?(relation.id) %>
+     <%= button_to("Add Friend", friendships_path(relation.id), method: :post, class: "mt2 btn btn-primary mb1 bg-teal") %>
+   <% end %>
+</li>

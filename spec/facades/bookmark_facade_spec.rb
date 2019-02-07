@@ -6,7 +6,7 @@ describe BookmarkFacade do
     bmf = BookmarkFacade.new(user)
     expect(bmf).to be_a(BookmarkFacade)
   end
-  describe 'instance methods' do
+  describe 'instance methods', :js do
     it '#tutorials' do
       user = create(:user)
       tutorial_1 = create(:tutorial)
